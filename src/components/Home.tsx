@@ -158,6 +158,16 @@ const Home = () => {
     return chatHistory
   }
 
+  const selectRecipient = (rec: User) => {
+    if (rec.id !== socket.id) {
+      if (recipient?.id === rec.id) {
+        setRecipient(undefined)
+      } else {
+        setRecipient(rec)
+      }
+    }
+  }
+
   return (
     <Container fluid className="px-4 mt-3">
       <Row style={{ height: "95vh" }}>
@@ -214,11 +224,9 @@ const Home = () => {
               .filter((user) => user.room === room)
               .map((user) => (
                 <ListGroup.Item
-                  onClick={() => setRecipient(user)}
+                  onClick={() => selectRecipient(user)}
                   key={user.id}
-                  className={
-                    user.id === recipient?.id ? "bg-success" : "bg-light"
-                  }
+                  className={user.id === recipient?.id ? "bg-info" : "bg-light"}
                 >
                   {user.username}
                 </ListGroup.Item>
